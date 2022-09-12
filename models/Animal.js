@@ -3,7 +3,6 @@ import { SpawnTimeRange, AnimalLeaving, WeatherConditions } from '../enums/enums
 
 /* AnimalSchema will correspond to a collection in your MongoDB database. */
 const AnimalSchema = new mongoose.Schema({
-  _id: Number,
   name: {
     /* The name of this animal */
 
