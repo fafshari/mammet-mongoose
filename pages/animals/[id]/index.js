@@ -27,20 +27,18 @@ const AnimalPage = ({ animal }) => {
         <img src={animal.image_url} />
         <h4 className="card-name">{animal.name}</h4>
         <div className="main-content">
-            <p className="card-name">{animal.name}</p>
+              <p className="card-name">{animal.name} ({animal.size[0]})</p>
+              <p className="card-subtitle">Time: {animal.time ?? 'Anytime'}</p>
+              <p className="card-subtitle">Weather: {animal.weather ?? 'N/A'}</p>
 
-            <div className="meta-info info">
-                <p className="label">Metric 1</p>
-                {/* {pet.likes.map((data, index) => (
-                    <li key={index}>{data} </li>
-                ))} */}
-            </div>
-            <div className="meta-info info">
-                <p className="label">Metric 2</p>
-                {/* {pet.dislikes.map((data, index) => (
-                    <li key={index}>{data} </li>
-                ))} */}
-            </div>
+              <div className="meta-info info">
+                <h4>Leavings</h4>
+                <p className="label">{animal.leaving} / {animal.rare_leaving} (rare)</p>
+              </div>
+              <div className="meta-info info">
+                <h4>Coordinates</h4>
+                <p className="label">({animal.location_x}, {animal.location_y})</p>
+              </div>
 
           <div className="btn-container">
             <Link href="/animals/[id]/edit" as={`/animals/${animal._id}/edit`}>

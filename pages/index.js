@@ -7,13 +7,6 @@ const Index = ({ animals, products }) => (
   <>
     <h1 className="heading">Animals</h1>
     <div className="grid wrapper">
-    <div key={0}>
-      <div className="card card-add">
-            <Link href="/animals/new" as={`/animals/new`}>
-              <button className="btn add">+</button>
-            </Link>
-      </div>
-    </div>
     {animals.map((animal) => (
         <div key={animal._id}>
           <div className="card">
@@ -45,7 +38,13 @@ const Index = ({ animals, products }) => (
           </div>
         </div>
     ))}
-    
+    <div key={1}>
+      <div className="card card-add">
+            <Link href="/animals/new" as={`/animals/new`}>
+              <button className="btn add">+</button>
+            </Link>
+      </div>
+    </div>
     </div>
     <h1 className="heading">Products</h1>
     <div className="grid wrapper">
