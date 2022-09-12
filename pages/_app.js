@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Pet Care App</title>
+        <title>Mammet</title>
       </Head>
 
       <div className="top-bar">
@@ -15,18 +15,21 @@ function MyApp({ Component, pageProps }) {
           <Link href="/">
             <a>Home</a>
           </Link>
-          <Link href="/new">
-            <a>Add Pet</a>
+          <Link href="/products">
+            <a>Products</a>
+          </Link>
+          <Link href="/animals">
+            <a>Animals</a>
           </Link>
         </div>
 
         <img
           id="title"
-          src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Pet_logo_with_flowers.png"
-          alt="pet care logo"
+          src="https://media.discordapp.net/attachments/640978235382956064/1018682382498418728/unknown.png?width=321&height=173"
+          alt="mammet logo"
         ></img>
       </div>
-      <div className="grid wrapper">
+      <div>
         <Component {...pageProps} />
       </div>
     </>

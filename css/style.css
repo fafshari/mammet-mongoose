@@ -2,6 +2,13 @@
   font-family: 'Open Sans', sans-serif;
   box-sizing: border-box;
 }
+html {
+  background: #121212;
+}
+
+h1.heading {
+  color: #eee;
+}
 
 /* Nav Area */
 .top-bar {
@@ -10,6 +17,7 @@
   position: relative;
   height: 80px;
   text-align: right;
+  background-color: #000;
 }
 #title {
   position: absolute;
@@ -25,10 +33,17 @@
 .nav a {
   margin: 0 20px;
   font-size: 120%;
+  font-weight: bold;
+  text-decoration: none;
   height: 100%;
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  color: #eee;
+}
+
+.nav a:hover {
+  text-decoration: underline;
 }
 
 .grid {
@@ -43,7 +58,7 @@
   width: 300px;
   height: 400px;
   overflow: hidden;
-  border: 1.25px solid rgb(233, 233, 233);
+  border: 1.25px solid rgb(34, 34, 34);
   border-radius: 16px;
   margin: 10px;
   transition: 0.5s all;
@@ -74,32 +89,43 @@
   object-fit: cover;
 }
 
+.card-add .btn.add {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  font-size: 500%;
+  background-color: rgb(32, 136, 73);
+  color: #fff;
+}
+
 .main-content {
   padding: 25px;
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(34, 34, 34, 0.9);
   width: 100%;
   height: 100%;
   opacity: 0;
   pointer-events: none;
   transition: 0.5s all;
+  color: #fff;
 }
 
-.owner {
+.card-subtitle {
   color: grey;
   font-size: 110%;
 }
 
-.pet-name {
+.card-name {
   font-weight: bold;
   font-size: 130%;
 }
 
-h5.pet-name {
+h4.card-name {
   color: white;
   position: absolute;
+  font-size: 150%;
   left: 0;
   bottom: 0;
   padding: 10px;
@@ -118,12 +144,12 @@ li {
 }
 
 .info {
-  color: rgb(83, 83, 83);
+  color: rgb(123, 123, 123);
   position: relative;
   overflow: hidden;
 }
 
-.info.likes {
+.info.meta-info {
   margin-top: 25px;
 }
 
@@ -173,7 +199,7 @@ li {
 }
 
 /* Delete Pet */
-.pet-container {
+.card-container {
   width: 100%;
 }
 
