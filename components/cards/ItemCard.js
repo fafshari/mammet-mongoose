@@ -9,6 +9,18 @@ const ItemCard = ({ obj, children }) => {
         label: 'Type',
         value: item.item_type
     })
+    
+    if (item.untradable) 
+        item.meta.push({
+            label: 'Untradable',
+            value: ''
+        })
+    
+    if (item.unique)
+    item.meta.push({
+        label: 'Unique',
+        value: ''
+    })
 
     return (
         <Card obj={item}>

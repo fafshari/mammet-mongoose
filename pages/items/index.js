@@ -1,35 +1,46 @@
 import Link from 'next/link'
 import dbConnect from '../../lib/dbConnect'
 import Item from '../../models/Item'
-import ItemCard from '../../components/cards/ItemCard'
-import ItemTile from '../../components/cards/ItemTile'
+import ItemTile from '../../components/tiles/ItemTile'
+import TileViewer from '../../components/tiles/TileViewer'
+import { useState } from 'react'
 
-const Index = ({ items }) => (
-  <>
-    <h1 className="heading">Items</h1>
-    <div className="grid wrapper">
-      {items.map((item) => (
-        <div key={item._id}>
-          <ItemTile obj={item}>
-            <Link href="/items/[id]/edit" as={`/items/${item._id}/edit`}>
-              <button className="btn edit">Edit</button>
-            </Link>
-            <Link href="/items/[id]" as={`/items/${item._id}`}>
-              <button className="btn view">View</button>
-            </Link>
-          </ItemTile>
-        </div>
-      ))}
-      <div key={0}>
-          <div className="tile card-add">
-                <Link href="/items/new" as={`/items/new`}>
-                  <button className="btn add">+</button>
-                </Link>
+const Index = ({ items }) => {
+
+  const [selectedItem, setItem] = useState(items[0])
+
+  const handleClick = (e, data) => {
+    setItem(data)
+  }
+
+  return (
+    <>
+      <h1 className="heading">Items</h1>
+      <TileViewer obj={selectedItem}></TileViewer>
+      <div className="grid wrapper tiles">
+        {items.map((item) => (
+          <div key={item._id}>
+            <ItemTile className={selectedItem === item ? 'selected' : ''} obj={item} onClick={((e) => handleClick(e, item))}>
+              <Link href="/items/[id]/edit" as={`/items/${item._id}/edit`}>
+                <button className="btn edit">Edit</button>
+              </Link>
+              <Link href="/items/[id]" as={`/items/${item._id}`}>
+                <button className="btn view">View</button>
+              </Link>
+            </ItemTile>
           </div>
+        ))}
+        <div key={0}>
+            <div className="tile card-add">
+                  <Link href="/items/new" as={`/items/new`}>
+                    <button className="btn add">+</button>
+                  </Link>
+            </div>
+        </div>
       </div>
-    </div>
-  </>
-  )
+    </>
+    )
+  }
   
   /* Retrieves data from mongodb database */
   export async function getServerSideProps() {
