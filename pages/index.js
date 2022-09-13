@@ -20,7 +20,7 @@ const Index = ({ animals, items, products }) => {
   }
 
   return (
-  <>
+  <div className="site-wrapper">
     <h1 className="heading">Animals</h1>
     <div className="grid wrapper">
       {animals.map((animal) => {
@@ -90,7 +90,7 @@ const Index = ({ animals, items, products }) => {
         </div>
       </div>
     </div>
-  </>
+  </div>
 )}
 
 export async function getServerSideProps() {
