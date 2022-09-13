@@ -14,7 +14,7 @@ const Index = ({ items }) => {
   }
 
   return (
-    <>
+    <div className="site-wrapper">
       <h1 className="heading">Items</h1>
       <TileViewer obj={selectedItem}></TileViewer>
       <div className="grid wrapper tiles">
@@ -38,7 +38,7 @@ const Index = ({ items }) => {
             </div>
         </div>
       </div>
-    </>
+    </div>
     )
   }
   

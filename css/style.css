@@ -7,6 +7,11 @@ html {
   color: #eee;
 }
 
+.site-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
 /* Nav Area */
 .top-bar {
   width: 100%;
@@ -123,8 +128,8 @@ html {
 /* Styles for Cards */
   .card {
     display: inline-block;
-    width: 300px;
-    height: 400px;
+    width: 250px;
+    height: 320px;
     overflow: hidden;
     border: 1.25px solid rgb(34, 34, 34);
     border-radius: 16px;
@@ -133,7 +138,7 @@ html {
     --shadow: transparent;
     box-shadow: 0 0 10px 5px var(--shadow);
     position: relative;
-    font-size: 100%;
+    font-size: 90%;
   }
 
   .card:hover {
