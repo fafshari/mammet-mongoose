@@ -4,7 +4,6 @@ import Link from 'next/link'
 import dbConnect from '../../../lib/dbConnect'
 import Item from '../../../models/Item'
 import ItemCard from '../../../components/cards/ItemCard'
-import ItemTile from '../../../components/cards/ItemTile'
 
 /* Allows you to view item card info and delete item card*/
 const ItemPage = ({ item }) => {
@@ -26,14 +25,14 @@ const ItemPage = ({ item }) => {
   return (
     <div className="grid wrapper">
       <div key={item._id}>
-        <ItemTile obj={item}>
+        <ItemCard obj={item}>
           <Link href="/items/[id]/edit" as={`/items/${item._id}/edit`}>
             <button className="btn edit">Edit</button>
           </Link>
           <button className="btn delete" onClick={handleDelete}>
             Delete
           </button>
-        </ItemTile>
+        </ItemCard>
         {message && <p>{message}</p>}
       </div>
     </div>
