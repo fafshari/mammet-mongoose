@@ -10,7 +10,6 @@ const Index = ({ items }) => {
   const [selectedItem, setItem] = useState(items[0])
 
   const handleClick = (e, data) => {
-    console.log(data)
     setItem(data)
   }
 
@@ -18,7 +17,7 @@ const Index = ({ items }) => {
     <>
       <h1 className="heading">Items</h1>
       <TileViewer obj={selectedItem}></TileViewer>
-      <div className="grid wrapper">
+      <div className="grid wrapper tiles">
         {items.map((item) => (
           <div key={item._id}>
             <ItemTile className={selectedItem === item ? 'selected' : ''} obj={item} onClick={((e) => handleClick(e, item))}>
