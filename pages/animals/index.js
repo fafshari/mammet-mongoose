@@ -1,7 +1,7 @@
 import Link from 'next/link'
+import AnimalCard from '../../components/cards/AnimalCard'
 import dbConnect from '../../lib/dbConnect'
 import Animal from '../../models/Animal'
-
 
 const Index = ({ animals }) => (
     <div className="grid wrapper">
@@ -13,35 +13,18 @@ const Index = ({ animals }) => (
           </div>
       </div>
       {animals.map((animal) => (
+        
         <div key={animal._id}>
-          <div className="card">
-            <img src={animal.image_url} />
-            <h4 className="card-name">{animal.name}</h4>
-            <div className="main-content">
-              <p className="card-name">{animal.name} ({animal.size[0]})</p>
-              <p className="card-subtitle">Time: {animal.time ?? 'Anytime'}</p>
-              <p className="card-subtitle">Weather: {animal.weather ?? 'N/A'}</p>
-
-              <div className="meta-info info">
-                <h4>Leavings</h4>
-                <p className="label">{animal.leaving} / {animal.rare_leaving} (rare)</p>
-              </div>
-              <div className="meta-info info">
-                <h4>Coordinates</h4>
-                <p className="label">({animal.location_x}, {animal.location_y})</p>
-              </div>
-  
-              <div className="btn-container">
-                <Link href="/animals/[id]/edit" as={`/animals/${animal._id}/edit`}>
-                  <button className="btn edit">Edit</button>
-                </Link>
-                <Link href="/animals/[id]" as={`/animals/${animal._id}`}>
-                  <button className="btn view">View</button>
-                </Link>
-              </div>
-            </div>
-          </div>
+          <AnimalCard obj={animal}>
+            <Link href="/animals/[id]/edit" as={`/animals/${animal._id}/edit`}>
+              <button className="btn edit">Edit</button>
+            </Link>
+            <Link href="/animals/[id]" as={`/animals/${animal._id}`}>
+              <button className="btn view">View</button>
+            </Link>
+          </AnimalCard>
         </div>
+        
       ))}
     </div>
   )

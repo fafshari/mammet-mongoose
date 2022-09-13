@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import dbConnect from '../../../lib/dbConnect'
 import Product from '../../../models/Product'
+import ProductCard from '../../../components/cards/ProductCard'
 
 /* Allows you to view product card info and delete product card*/
 const ProductPage = ({ product }) => {
@@ -23,40 +24,14 @@ const ProductPage = ({ product }) => {
 
   return (
     <div key={product._id}>
-      <div className="card">
-        <h5 className="car-name">{product.name}</h5>
-        <div className="main-content">
-            <p className="card-name">{product.name}</p>
-            <p className="card-subtitle">Time: {product.time}</p>
-
-            {/* Extra Pet Info: Likes and Dislikes */}
-            <div className="meta-info info">
-                <p className="label">Metric 1</p>
-                <ul>
-                {/* {pet.likes.map((data, index) => (
-                    <li key={index}>{data} </li>
-                ))} */}
-                </ul>
-            </div>
-            <div className="meta-info info">
-                <p className="label">Metric 2</p>
-                <ul>
-                {/* {pet.dislikes.map((data, index) => (
-                    <li key={index}>{data} </li>
-                ))} */}
-                </ul>
-            </div>
-
-          <div className="btn-container">
-            <Link href="/products/[id]/edit" as={`/products/${product._id}/edit`}>
-              <button className="btn edit">Edit</button>
-            </Link>
-            <button className="btn delete" onClick={handleDelete}>
-              Delete
-            </button>
-          </div>
-        </div>
-      </div>
+      <ProductCard obj={product}>
+        <Link href="/products/[id]/edit" as={`/products/${product._id}/edit`}>
+          <button className="btn edit">Edit</button>
+        </Link>
+        <button className="btn delete" onClick={handleDelete}>
+          Delete
+        </button>
+      </ProductCard>
       {message && <p>{message}</p>}
     </div>
   )
