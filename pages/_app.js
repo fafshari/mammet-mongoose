@@ -2,6 +2,7 @@ import '../css/style.css'
 import '../css/form.css'
 import Head from 'next/head'
 import Link from 'next/link'
+import Card from '../components/cards/Card'
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -15,11 +16,14 @@ function MyApp({ Component, pageProps }) {
           <Link href="/">
             <a>Home</a>
           </Link>
-          <Link href="/products">
-            <a>Products</a>
-          </Link>
           <Link href="/animals">
             <a>Animals</a>
+          </Link>
+          <Link href="/items">
+            <a>Items</a>
+          </Link>
+          <Link href="/products">
+            <a>Products</a>
           </Link>
         </div>
 

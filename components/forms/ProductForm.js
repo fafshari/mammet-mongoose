@@ -37,7 +37,7 @@ const ProductForm = ({ formId, objectForm, forNewObject = true }) => {
       mutate(`/api/products/${id}`, data, false) // Update the local data without a revalidation
       router.push('/')
     } catch (error) {
-      setMessage('Failed to update pet')
+      setMessage('Failed to update')
     }
   }
 
@@ -60,7 +60,7 @@ const ProductForm = ({ formId, objectForm, forNewObject = true }) => {
 
       router.push('/')
     } catch (error) {
-      setMessage('Failed to add pet')
+      setMessage('Failed to add')
     }
   }
 
@@ -75,7 +75,6 @@ const ProductForm = ({ formId, objectForm, forNewObject = true }) => {
     })
   }
 
-  /* Makes sure pet info is filled for pet name, owner name, species, and image url*/
   const formValidate = () => {
     let err = {}
     if (!form.name) err.name = 'Name is required'

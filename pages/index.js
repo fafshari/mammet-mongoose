@@ -1,104 +1,89 @@
 import Link from 'next/link'
+import AnimalCard from '../components/cards/AnimalCard'
+import ItemCard from '../components/cards/ItemCard'
+import ItemTile from '../components/cards/ItemTile'
+import ProductCard from '../components/cards/ProductCard'
 import dbConnect from '../lib/dbConnect'
 import Animal from '../models/Animal'
+import Item from '../models/Item'
 import Product from '../models/Product'
 
-const Index = ({ animals, products }) => (
+
+const Index = ({ animals, items, products }) => (
   <>
     <h1 className="heading">Animals</h1>
     <div className="grid wrapper">
-    {animals.map((animal) => (
-        <div key={animal._id}>
-          <div className="card">
-            <img src={animal.image_url} />
-            <h4 className="card-name">{animal.name}</h4>
-            <div className="main-content">
-              <p className="card-name">{animal.name} ({animal.size[0]})</p>
-              <p className="card-subtitle">Time: {animal.time ?? 'Anytime'}</p>
-              <p className="card-subtitle">Weather: {animal.weather ?? 'N/A'}</p>
-
-              <div className="meta-info info">
-                <h4>Leavings</h4>
-                <p className="label">{animal.leaving} / {animal.rare_leaving} (rare)</p>
-              </div>
-              <div className="meta-info info">
-                <h4>Coordinates</h4>
-                <p className="label">({animal.location_x}, {animal.location_y})</p>
-              </div>
-  
-              <div className="btn-container">
-                <Link href="/animals/[id]/edit" as={`/animals/${animal._id}/edit`}>
-                  <button className="btn edit">Edit</button>
-                </Link>
-                <Link href="/animals/[id]" as={`/animals/${animal._id}`}>
-                  <button className="btn view">View</button>
-                </Link>
-              </div>
-            </div>
+      {animals.map((animal) => {
+        return (
+          <div key={animal._id}>
+            <AnimalCard obj={animal}>
+              <Link href="/animals/[id]/edit" as={`/animals/${animal._id}/edit`}>
+                <button className="btn edit">Edit</button>
+              </Link>
+              <Link href="/animals/[id]" as={`/animals/${animal._id}`}>
+                <button className="btn view">View</button>
+              </Link>
+            </AnimalCard>
           </div>
+        )
+      })}
+      <div key={1}>
+        <div className="card card-add">
+          <Link href="/animals/new" as={`/animals/new`}>
+            <button className="btn add">+</button>
+          </Link>
         </div>
-    ))}
-    <div key={1}>
-      <div className="card card-add">
-            <Link href="/animals/new" as={`/animals/new`}>
-              <button className="btn add">+</button>
-            </Link>
       </div>
     </div>
+    <h1 className="heading">Items</h1>
+    <div className="grid wrapper">
+      {items.map((item) => {
+        return (
+          <div key={item._id}>
+            <ItemTile obj={item}>
+              <Link href="/items/[id]/edit" as={`/items/${item._id}/edit`}>
+                <button className="btn edit">Edit</button>
+              </Link>
+              <Link href="/items/[id]" as={`/items/${item._id}`}>
+                <button className="btn view">View</button>
+              </Link>
+            </ItemTile>
+          </div>
+        )
+      })}
+      <div key={1}>
+        <div className="tile tile-add">
+          <Link href="/items/new" as={`/items/new`}>
+            <button className="btn add">+</button>
+          </Link>
+        </div>
+      </div>
     </div>
     <h1 className="heading">Products</h1>
     <div className="grid wrapper">
-    <div key={0}>
-      <div className="card card-add">
-            <Link href="/products/new" as={`/products/new`}>
-              <button className="btn add">+</button>
-            </Link>
-      </div>
-    </div>
-    {products.map((product) => (
+      {products.map((product) => (
         <div key={product._id}>
-          <div className="card">
-            <img src={product.image_url} />
-            <h5 className="card-name">{product.name}</h5>
-            <div className="main-content">
-              <p className="card-name">{product.name}</p>
-              <p className="card-subtitle">Time: {product.time}</p>
-  
-              {/* Extra Pet Info: Likes and Dislikes */}
-              <div className="meta-info info">
-                <p className="label">Metric 1</p>
-                <ul>
-                  {/* {pet.likes.map((data, index) => (
-                    <li key={index}>{data} </li>
-                  ))} */}
-                </ul>
-              </div>
-              <div className="meta-info info">
-                <p className="label">Metric 2</p>
-                <ul>
-                  {/* {pet.dislikes.map((data, index) => (
-                    <li key={index}>{data} </li>
-                  ))} */}
-                </ul>
-              </div>
-  
-              <div className="btn-container">
-                <Link href="/products/[id]/edit" as={`/products/${product._id}/edit`}>
-                  <button className="btn edit">Edit</button>
-                </Link>
-                <Link href="/products/[id]" as={`/products/${product._id}`}>
-                  <button className="btn view">View</button>
-                </Link>
-              </div>
-            </div>
-          </div>
+          <ProductCard obj={product}>
+            <Link href="/products/[id]/edit" as={`/products/${product._id}/edit`}>
+              <button className="btn edit">Edit</button>
+            </Link>
+            <Link href="/products/[id]" as={`/products/${product._id}`}>
+              <button className="btn view">View</button>
+            </Link>
+          </ProductCard>
         </div>
       ))}
+      <div key={0}>
+        <div className="card card-add">
+              <Link href="/products/new" as={`/products/new`}>
+                <button className="btn add">+</button>
+              </Link>
+        </div>
+      </div>
     </div>
   </>
 )
 
-/* Retrieves pet(s) data from mongodb database */
 export async function getServerSideProps() {
   await dbConnect()
 
@@ -111,6 +96,13 @@ export async function getServerSideProps() {
     animal._id = animal._id.toString()
     return animal
   })
+  
+  result = await Item.find({})
+  const items = result.map((doc) => {
+    const item = doc.toObject()
+    item._id = item._id.toString()
+    return item
+  })
 
   result = await Product.find({})
   const products = result.map((doc) => {
@@ -119,7 +111,11 @@ export async function getServerSideProps() {
     return product
   })
 
-  return { props: { animals: animals, products: products } }
+  return { props: { 
+    animals: animals, 
+    items: items,
+    products: products 
+  } }
 }
 
 export default Index

@@ -1,4 +1,4 @@
-import AnimalForm from '../../components/AnimalForm'
+import AnimalForm from '../../components/forms/AnimalForm'
 import { SpawnTimeRange, AnimalLeaving, WeatherConditions, AnimalSize } from '../../enums/enums'
 
 const NewAnimal = () => {

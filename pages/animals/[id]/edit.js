@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import Form from '../../../components/AnimalForm'
+import Form from '../../../components/forms/AnimalForm'
 import { AnimalLeaving, AnimalSize, SpawnTimeRange, WeatherConditions } from '../../../enums/enums'
 
 const fetcher = (url) =>
