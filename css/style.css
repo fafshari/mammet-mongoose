@@ -239,6 +239,23 @@ html {
   font-weight: bold;
 }
 
+.checkbox {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+.checkbox .label {
+  margin-top: 0;
+  margin-left: 10px;
+}
+
+.checkbox > :first-child {
+  flex-basis: 20%;
+}
+
 /* Buttons */
   .btn-container {
     text-align: right;
@@ -273,12 +290,10 @@ html {
 
   .delete.btn {
     --accent: rgb(249, 64, 64);
-    margin-left: 10px;
   }
 
   .view.btn {
     --accent: rgb(79, 79, 233);
-    margin-left: 10px;
   }
 
   .card-container {

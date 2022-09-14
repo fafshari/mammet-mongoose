@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { mutate } from 'swr'
 
@@ -14,7 +14,12 @@ const ItemForm = ({ formId, objectForm, forNewObject = true }) => {
     description: objectForm.description,
     untradable: objectForm.untradable,
     unique: objectForm.unique,
-    image_url: objectForm.image_url
+    image_url: objectForm.image_url,
+    sell_price: objectForm.sell_price,
+    sell_currency: objectForm.sell_currency.options[0],
+    attainability: objectForm.attainability.value,
+    usability: objectForm.usability.value,
+    custom_meta: objectForm.custom_meta.value
   })
 
   /* The PUT method edits an existing entry in the mongodb database. */
@@ -48,7 +53,7 @@ const ItemForm = ({ formId, objectForm, forNewObject = true }) => {
   /* The POST method adds a new entry in the mongodb database. */
   const postData = async (form) => {
     try {
-      console.log(form)
+
       const res = await fetch('/api/items', {
         method: 'POST',
         headers: {
@@ -78,12 +83,36 @@ const ItemForm = ({ formId, objectForm, forNewObject = true }) => {
             target.checked : target.value
     const name = target.name
 
-    console.log([name, value])
-
     setForm({
       ...form,
       [name]: value,
     })
+  }
+
+  const handleCustomMetaChange = (e) => {
+    const target = e.target
+    const idx_key = target.name.substring('custom_meta_'.length).split('_')
+    const new_meta = form.custom_meta.map((meta) => {
+      if (meta.index == idx_key[0]) {
+        return { ...meta, [idx_key[1]] : target.value }
+      }
+      return meta
+    })
+
+    form.custom_meta = new_meta
+    setForm({...form})
+  }
+
+  const handleCheckboxChange = (e, key, value) => {
+    const target = e.target
+    if (!target.checked) {
+      form[key] = form[key].filter((item) => {
+        return item !== value
+      })
+    } else {
+      form[key].push(value)
+    }
+    setForm({...form})
   }
 
   const formValidate = () => {
@@ -95,12 +124,29 @@ const ItemForm = ({ formId, objectForm, forNewObject = true }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     const errs = formValidate()
-    console.log(form);
     if (Object.keys(errs).length === 0) {
+      form.custom_meta = form.custom_meta.map(({ index, ...item }) => item)
       forNewObject ? postData(form) : putData(form)
     } else {
       setErrors({ errs })
     }
+  }
+
+  const handleMetaAdd = (e) => {
+    e.preventDefault()
+    form.custom_meta.push({...objectForm.custom_meta.meta_fields, 
+      index: form.custom_meta.at(-1) ? 
+        form.custom_meta.at(-1).index + 1 : 0 })
+    setForm({...form})
+  }
+
+  const handleMetaDelete = (e, data) => {
+    e.preventDefault()
+    const new_meta = form.custom_meta.filter((meta) => {
+      return meta !== data
+    })
+    form.custom_meta = new_meta
+    setForm({...form})
   }
 
   return (
@@ -111,18 +157,16 @@ const ItemForm = ({ formId, objectForm, forNewObject = true }) => {
           type="text"
           maxLength="60"
           name="name"
-          value={form.name}
+          defaultValue={form.name}
           onChange={handleChange}
           required
         />
 
         <label htmlFor="item_type">Item Type</label>
         <select name="item_type" onChange={handleChange} defaultValue={objectForm.item_type.value} required>
-            {
-              objectForm.item_type.options.map((value, index) => {
-                return <option key={index} value={value}>{value}</option>
-              })
-            }
+          {objectForm.item_type.options.map((value, index) => {
+            return <option key={index} value={value}>{value}</option>
+          })}
         </select>
 
         <label htmlFor="description">Item Description</label>
@@ -130,33 +174,119 @@ const ItemForm = ({ formId, objectForm, forNewObject = true }) => {
           type="textarea"
           maxLength="255"
           name="description"
-          value={form.description}
-          onChange={handleChange}
-        />
-        
-        <label htmlFor="untradable">Untradable</label>
-        <input
-          type="checkbox"
-          name="untradable"
-          checked={form.untradable}
+          defaultValue={form.description}
           onChange={handleChange}
         />
 
-        <label htmlFor="unique">Unique</label>
-        <input
-          type="checkbox"
-          name="unique"
-          checked={form.unique}
-          onChange={handleChange}
-        />
-        
+        <div className="checkbox">
+          <input
+            type="checkbox"
+            name="untradable"
+            checked={form.untradable}
+            onChange={handleChange}
+          />
+          <label htmlFor="untradable">Untradable</label>
+        </div>
+            
+        <div className="checkbox">
+          <input
+            type="checkbox"
+            name="unique"
+            checked={form.unique}
+            onChange={handleChange}
+          />
+          <label htmlFor="unique">Unique</label>
+        </div>
+
         <label htmlFor="image_url">Image URL</label>
         <input
           type="url"
           name="image_url"
-          value={form.image_url}
+          defaultValue={form.image_url}
           onChange={handleChange}
         />
+        
+        <label htmlFor="sell_price">Sell Price</label>
+        <input
+          type="number"
+          name="sell_price"
+          defaultValue={form.sell_price}
+          onChange={handleChange}
+        />
+
+        <label htmlFor="sell_currency">Sell Currency</label>
+        <select name="sell_currency" onChange={handleChange} defaultValue={objectForm.sell_currency.value} required>
+          {objectForm.sell_currency.options.map((value, index) => {
+            return <option key={index} value={value}>{value}</option>
+          })}
+        </select>
+
+        <h4>Attainability</h4>
+        <ul>
+          {objectForm.attainability.options.map((value, index) => {
+            return (
+              <li key={index} className="checkbox">
+                <input 
+                  type="checkbox" 
+                  id={`attainability-${index}`}
+                  name={`attainability-${index}`}
+                  value={value}
+                  checked={form.attainability.includes(value)}
+                  onChange={(e) => handleCheckboxChange(e, 'attainability', value)}/> <label>{value}</label>
+              </li>
+            )
+          })}
+        </ul>
+
+        <h4>Usability</h4>
+        <ul>
+          {objectForm.usability.options.map((value, index) => {
+            return (
+              <li key={index} className="checkbox">
+                <input 
+                  type="checkbox" 
+                  id={`usability-${index}`}
+                  name={`usability-${index}`}
+                  value={value}
+                  checked={form.usability.includes(value)}
+                  onChange={(e) => handleCheckboxChange(e, 'usability', value)}/> <label>{value}</label>
+              </li>
+            )
+          })}
+        </ul>
+        
+        <h4>Custom Meta</h4>
+        <div className="subdoc-list">
+          {form.custom_meta.map((value) => {
+            return (
+              <div key={value.index} className="subdoc">
+                <label htmlFor={`custom_meta_${value.index}_key`}>Key</label>
+                <input
+                  type="text"
+                  name={`custom_meta_${value.index}_key`}
+                  defaultValue={value.key}
+                  onChange={handleCustomMetaChange}
+                />
+                <label htmlFor={`custom_meta_${value.index}_value`}>Value</label>
+                <input
+                  type="text"
+                  name={`custom_meta_${value.index}_value`}
+                  defaultValue={value.value}
+                  onChange={handleCustomMetaChange}
+                />
+                <label htmlFor={`custom_meta_${value.index}_description`}>Description</label>
+                <input
+                  type="text"
+                  name={`custom_meta_${value.index}_description`}
+                  defaultValue={value.description}
+                  onChange={handleCustomMetaChange}
+                />
+                <button onClick={((e) => handleMetaDelete(e, value))} className="btn delete">Delete</button>
+              </div>
+            )
+          })}
+          <button onClick={handleMetaAdd} className="btn edit">Add New</button>
+        </div>
 
         <button type="submit" className="btn">
           Submit

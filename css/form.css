@@ -41,3 +41,11 @@ form button {
 .form-container {
   width: 90%;
 }
+
+
+form .subdoc {
+  background-color: #1a1a1a;
+  padding: 16px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
