@@ -1,7 +1,21 @@
-import mongoose from 'mongoose'
-import { ItemType } from '../enums/enums'
+import { Schema, models, model } from 'mongoose'
+import { IslandCurrency, ItemAttainability, ItemType, ItemUsability } from '../enums/enums'
 
-const ItemSchema = new mongoose.Schema({
+const ItemMeta = new Schema({
+  key: {
+    type: String,
+    required: true
+  },
+  value: {
+    type: Schema.Types.Mixed,
+    required: true
+  },
+  description: {
+    type: String
+  }
+}, { _id : false })
+
+const ItemSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -26,7 +40,25 @@ const ItemSchema = new mongoose.Schema({
   unique: {
     type: Boolean,
     default: false
+  },
+  sell_price: {
+    type: Number,
+    default: 0
+  },
+  sell_currency: {
+    type: String,
+    enum: IslandCurrency
+  },
+  attainability: {
+    type: ItemAttainability
+  },
+  usability: {
+    type: ItemUsability
+  },
+  custom_meta: {
+    type: [ItemMeta],
+    default: []
   }
 })
 
-export default mongoose.models.Item || mongoose.model('Item', ItemSchema)
+export default models.Item || model('Item', ItemSchema)

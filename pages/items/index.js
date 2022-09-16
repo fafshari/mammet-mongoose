@@ -4,6 +4,7 @@ import Item from '../../models/Item'
 import ItemTile from '../../components/tiles/ItemTile'
 import TileViewer from '../../components/tiles/TileViewer'
 import { useState } from 'react'
+import TileBrowser from '../../components/tiles/TileBrowser'
 
 const Index = ({ items }) => {
 
@@ -15,29 +16,12 @@ const Index = ({ items }) => {
 
   return (
     <div className="site-wrapper">
-      <h1 className="heading">Items</h1>
-      <TileViewer obj={selectedItem}></TileViewer>
-      <div className="grid wrapper tiles">
-        {items.map((item) => (
-          <div key={item._id}>
-            <ItemTile className={selectedItem === item ? 'selected' : ''} obj={item} onClick={((e) => handleClick(e, item))}>
-              <Link href="/items/[id]/edit" as={`/items/${item._id}/edit`}>
-                <button className="btn edit">Edit</button>
-              </Link>
-              <Link href="/items/[id]" as={`/items/${item._id}`}>
-                <button className="btn view">View</button>
-              </Link>
-            </ItemTile>
-          </div>
-        ))}
-        <div key={0}>
-            <div className="tile card-add">
-                  <Link href="/items/new" as={`/items/new`}>
-                    <button className="btn add">+</button>
-                  </Link>
-            </div>
-        </div>
-      </div>
+    <h1 className="mt-6 mb-4 text-4xl">Items</h1>
+      <TileBrowser 
+        selectedItem={selectedItem}
+        items={items}
+        tileOnClick={handleClick}
+      />
     </div>
     )
   }

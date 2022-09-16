@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Form from '../../../components/forms/ItemForm'
-import { ItemType } from '../../../enums/enums'
+import { IslandCurrency, ItemAttainability, ItemType, ItemUsability } from '../../../enums/enums'
 
 const fetcher = (url) =>
   fetch(url)
@@ -23,9 +23,33 @@ const EditItem = () => {
       options: ItemType
     },
     description: item.description,
+    image_url: item.image_url,
     untradable: item.untradable,
     unique: item.unique,
-    image_url: item.image_url
+    sell_price: item.sell_price,
+    sell_currency: {
+      value: item.sell_currency,
+      options: IslandCurrency
+    },
+    attainability: {
+      value: item.attainability,
+      options: ItemAttainability
+    },
+    usability: {
+      value: item.usability,
+      options: ItemUsability
+    },
+    custom_meta: {
+      value: item.custom_meta.map((meta, index) => {
+        meta.index = index
+        return meta
+      }),
+      meta_fields: {
+        key: '',
+        value: null,
+        description: ''
+      }
+    }
   }
 
   return <Form formId="edit-item-form" objectForm={itemForm} forNewObject={false} />

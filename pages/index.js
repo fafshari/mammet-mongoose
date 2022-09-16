@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import AnimalCard from '../components/cards/AnimalCard'
-import ItemCard from '../components/cards/ItemCard'
 import ItemTile from '../components/tiles/ItemTile'
 import ProductCard from '../components/cards/ProductCard'
 import dbConnect from '../lib/dbConnect'
@@ -8,68 +7,54 @@ import Animal from '../models/Animal'
 import Item from '../models/Item'
 import Product from '../models/Product'
 import TileViewer from '../components/tiles/TileViewer'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Currency from '../components/currencies/Currency'
+import Button from '../components/Button'
+import AddCard from '../components/cards/AddCard'
+import TileBrowser from '../components/tiles/TileBrowser'
+import workshopCycles from '../lib/workshopCycles'
 
 
-const Index = ({ animals, items, products }) => {
+const Index = ({ animals, items, products, workshop_data }) => {
   
   const [selectedItem, setItem] = useState(items[0])
+  const [workshopData, setWorkshopData] = useState(workshop_data)
 
   const handleClick = (e, data) => {
+    console.log(data)
     setItem(data)
   }
 
   return (
-  <div className="site-wrapper">
-    <h1 className="heading">Animals</h1>
-    <div className="grid wrapper">
+  <div className="max-w-6xl mx-auto">
+    <h1 className="mt-6 mb-4 text-4xl ">Animals</h1>
+    <div className="flex flex-wrap justify-center">
       {animals.map((animal) => {
         return (
           <div key={animal._id}>
             <AnimalCard obj={animal}>
-              <Link href="/animals/[id]/edit" as={`/animals/${animal._id}/edit`}>
-                <button className="btn edit">Edit</button>
+              <Link href="/animals/[id]/edit" as={`/animals/${animal._id}/edit`} passHref>
+                <Button type="edit">Edit</Button> 
               </Link>
-              <Link href="/animals/[id]" as={`/animals/${animal._id}`}>
-                <button className="btn view">View</button>
+              <Link href="/animals/[id]" as={`/animals/${animal._id}`} passHref>
+                <Button className="ml-3" type="view">View</Button> 
               </Link>
             </AnimalCard>
           </div>
         )
       })}
       <div key={1}>
-        <div className="card card-add">
-          <Link href="/animals/new" as={`/animals/new`}>
-            <button className="btn add">+</button>
-          </Link>
-        </div>
+        <AddCard href="/animals/new"/>
       </div>
     </div>
-    <h1 className="heading">Items</h1>
-    <TileViewer obj={selectedItem}></TileViewer>
-    <div className="grid wrapper tiles">
-      {items.map((item) => (
-        <div key={item._id}>
-          <ItemTile className={selectedItem === item ? 'selected' : ''} obj={item} onClick={((e) => handleClick(e, item))}>
-            <Link href="/items/[id]/edit" as={`/items/${item._id}/edit`}>
-              <button className="btn edit">Edit</button>
-            </Link>
-            <Link href="/items/[id]" as={`/items/${item._id}`}>
-              <button className="btn view">View</button>
-            </Link>
-          </ItemTile>
-        </div>
-      ))}
-      <div key={0}>
-          <div className="tile card-add">
-                <Link href="/items/new" as={`/items/new`}>
-                  <button className="btn add">+</button>
-                </Link>
-          </div>
-      </div>
-    </div>
-    <h1 className="heading">Products</h1>
-    <div className="grid wrapper">
+    <h1 className="mt-6 mb-4 text-4xl">Items</h1>
+      <TileBrowser 
+        selectedItem={selectedItem}
+        items={items}
+        tileOnClick={handleClick}
+      />
+    <h1 className="mt-6 mb-4 text-4xl">Products</h1>
+    <div className="flex flex-wrap justify-center">
       {products.map((product) => (
         <div key={product._id}>
           <ProductCard obj={product}>
@@ -120,10 +105,14 @@ export async function getServerSideProps() {
     return product
   })
 
+  const data = await workshopCycles()
+  console.log(data)
+
   return { props: { 
     animals: animals, 
     items: items,
-    products: products 
+    products: products,
+    workshop_data: data
   } }
 }
 
