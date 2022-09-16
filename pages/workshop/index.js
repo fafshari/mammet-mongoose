@@ -20,7 +20,6 @@ const Workshop = ({ workshop_data }) => {
 export async function getServerSideProps() {
   
   const data = await workshopCycles()
-  console.log(data)
 
   return { props: { 
     workshop_data: data
