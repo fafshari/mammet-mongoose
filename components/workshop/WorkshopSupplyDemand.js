@@ -22,7 +22,7 @@ const WorkShopSupplyDemand = ({workshop_data}) => {
                         </thead>
                         <tbody>
                             {
-                                workshop_data.slice(1).map((item) => {
+                                workshop_data.map((item) => {
                                     return (
                                         <tr class="border-b border-slate-600 ">
                                             {
