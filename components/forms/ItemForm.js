@@ -26,6 +26,7 @@ const ItemForm = ({ formId, objectForm, forNewObject = true }) => {
   const putData = async (form) => {
     const { id } = router.query
 
+    console.log(form)
     try {
       const res = await fetch(`/api/items/${id}`, {
         method: 'PUT',
@@ -53,7 +54,7 @@ const ItemForm = ({ formId, objectForm, forNewObject = true }) => {
   /* The POST method adds a new entry in the mongodb database. */
   const postData = async (form) => {
     try {
-
+      console.log(form)
       const res = await fetch('/api/items', {
         method: 'POST',
         headers: {
@@ -99,6 +100,8 @@ const ItemForm = ({ formId, objectForm, forNewObject = true }) => {
       return meta
     })
 
+    console.log(target.name)
+
     form.custom_meta = new_meta
     setForm({...form})
   }
@@ -112,6 +115,7 @@ const ItemForm = ({ formId, objectForm, forNewObject = true }) => {
     } else {
       form[key].push(value)
     }
+    console.log(form)
     setForm({...form})
   }
 
@@ -257,27 +261,28 @@ const ItemForm = ({ formId, objectForm, forNewObject = true }) => {
         
         <h4>Custom Meta</h4>
         <div className="subdoc-list">
-          {form.custom_meta.map((value) => {
+          {form.custom_meta.map((value, i) => {
+            const index = value.index ?? i 
             return (
-              <div key={value.index} className="subdoc">
+              <div key={index} className="subdoc" data-key={index}>
                 <label htmlFor={`custom_meta_${value.index}_key`}>Key</label>
                 <input
                   type="text"
-                  name={`custom_meta_${value.index}_key`}
+                  name={`custom_meta_${index}_key`}
                   defaultValue={value.key}
                   onChange={handleCustomMetaChange}
                 />
-                <label htmlFor={`custom_meta_${value.index}_value`}>Value</label>
+                <label htmlFor={`custom_meta_${index}_value`}>Value</label>
                 <input
                   type="text"
-                  name={`custom_meta_${value.index}_value`}
+                  name={`custom_meta_${index}_value`}
                   defaultValue={value.value}
                   onChange={handleCustomMetaChange}
                 />
-                <label htmlFor={`custom_meta_${value.index}_description`}>Description</label>
+                <label htmlFor={`custom_meta_${index}_description`}>Description</label>
                 <input
                   type="text"
-                  name={`custom_meta_${value.index}_description`}
+                  name={`custom_meta_${index}_description`}
                   defaultValue={value.description}
                   onChange={handleCustomMetaChange}
                 />
@@ -289,7 +294,7 @@ const ItemForm = ({ formId, objectForm, forNewObject = true }) => {
         </div>
 
         <button type="submit" className="btn">
-          Submit
+          {forNewObject ? "Submit" : "Update"}
         </button>
       </form>
       <p>{message}</p>

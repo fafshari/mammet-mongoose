@@ -1,7 +1,7 @@
-const Tile = ({ obj, children, onClick, className }) => {
+const Tile = ({ obj, onClick, className }) => {
 
     return (
-        <div className={`tile ${className}`} onClick={onClick}>
+        <div className={`inline-block relative w-20 h-20 tile ${className}`} onClick={onClick}>
             <img src={obj.image_url} />
         </div>
     )

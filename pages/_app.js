@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps }) {
           alt="mammet logo"
         ></img>
       </div>
-      <div>
+      <div className="container mx-auto px-4">
         <Component {...pageProps} />
       </div>
     </>

@@ -50,12 +50,10 @@ const ItemSchema = new Schema({
     enum: IslandCurrency
   },
   attainability: {
-    type: [ItemAttainability],
-    required: true
+    type: ItemAttainability
   },
   usability: {
-    type: [ItemUsability],
-    required: true
+    type: ItemUsability
   },
   custom_meta: {
     type: [ItemMeta],

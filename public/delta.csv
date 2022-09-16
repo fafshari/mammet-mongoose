@@ -1,0 +1,16 @@
+D0,D1,D2,D3,D4,D5,D6,D7
+Cycle 2 Weak,-4,-4,10,0,0,0,0
+Cycle 2 Strong,-8,-7,15,0,0,0,0
+Cycle 3 Weak,0,-4,-4,10,0,0,0
+Cycle 3 Strong,0,-8,-7,15,0,0,0
+Cycle 4 Weak,0,0,-4,-4,10,0,0
+Cycle 4 Strong,0,0,-8,-7,15,0,0
+Cycle 5 Weak,0,0,0,-4,-4,10,0
+Cycle 5 Strong,0,0,0,-8,-7,15,0
+Cycle 6 Weak,0,-1,5,-4,-4,-4,10
+Cycle 6 Strong,0,-1,8,-7,-8,-7,15
+Cycle 7 Weak,0,-1,8,-3,-4,-4,-4
+Cycle 7 Strong,0,-1,8,0,-7,-8,-7
+Cycle 4/5,0,0,,,,,
+Cycle 6/7,0,-1,8,0,,,
+Cycle 5,0,0,0,-4,-4,,

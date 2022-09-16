@@ -1,6 +1,6 @@
 import Card from "./Card"
 
-const AnimalCard = ({obj, children}) => {
+const AnimalCard = ({ obj, children }) => {
 
     const animal = obj
     animal.name_content = `${animal.name} (${animal.size[0]})`

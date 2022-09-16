@@ -1,6 +1,6 @@
 import Tile from "./Tile"
 
-const ItemTile = ({obj, children, onClick, className}) => {
+const ItemTile = ({obj, onClick, className}) => {
     const tile = obj
     tile.subtitle = tile.item_type
     tile.meta = []
@@ -13,7 +13,7 @@ const ItemTile = ({obj, children, onClick, className}) => {
         value: tile.unique
     })
     return (
-        <Tile className={className} obj={tile} onClick={onClick}>{children}</Tile>
+        <Tile className={className} obj={tile} onClick={onClick}/>
     )
 }
 

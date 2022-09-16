@@ -4,6 +4,7 @@ import Link from 'next/link'
 import dbConnect from '../../../lib/dbConnect'
 import Animal from '../../../models/Animal'
 import AnimalCard from '../../../components/cards/AnimalCard'
+import Button from '../../../components/Button'
 
 /* Allows you to view animal card info and delete animal card*/
 const AnimalPage = ({ animal }) => {
@@ -25,11 +26,11 @@ const AnimalPage = ({ animal }) => {
   return (
     <div key={animal._id}>
       <AnimalCard obj={animal}>
-          <Link href="/animals/[id]/edit" as={`/animals/${animal._id}/edit`}>
-            <button className="btn edit">Edit</button>
+          <Link href="/animals/[id]/edit" as={`/animals/${animal._id}/edit`} passHref>
+            <Button type="edit">Edit</Button>
           </Link>
-          <button className="btn delete" onClick={handleDelete}>
-            Delete
+          <button className="btn delete" onClick={handleDelete} passHref>
+            <Button className="ml-3" type="delete">Delete</Button>
           </button>
       </AnimalCard>
       {message && <p>{message}</p>}

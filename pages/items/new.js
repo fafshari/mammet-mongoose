@@ -14,7 +14,7 @@ const NewItem = () => {
       options: ItemType
     },
     description: '',
-    iamge_url: '',
+    image_url: '',
     untradable: true,
     unique: false,
     sell_price: 0,
