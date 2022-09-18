@@ -9,11 +9,11 @@ const NewAnimal = () => {
       options: AnimalSize
     },
     leaving: {
-      value: null,
+      value: AnimalLeaving[0],
       options: AnimalLeaving
     },
     rare_leaving: {
-      value: null,
+      value: AnimalLeaving[1],
       options: AnimalLeaving
     },
     time: {

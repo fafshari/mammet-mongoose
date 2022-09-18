@@ -48,11 +48,13 @@ const Index = ({ animals, items, products, workshop_data }) => {
       </div>
     </div>
     <h1 className="mt-6 mb-4 text-4xl">Items</h1>
+    {selectedItem && 
       <TileBrowser 
         selectedItem={selectedItem}
         items={items}
         tileOnClick={handleClick}
       />
+    }
     <h1 className="mt-6 mb-4 text-4xl">Products</h1>
     <div className="flex flex-wrap justify-center">
       {products.map((product) => (

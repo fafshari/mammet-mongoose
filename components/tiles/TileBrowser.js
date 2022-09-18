@@ -13,13 +13,13 @@ const TileBrowser = ({selectedItem, items, tileOnClick}) => {
                 className="mb-4 transition-all lg:mb-0 basis-2/5 lg:-ml-4" 
                 obj={selectedItem}
                 topRight={
-                    <Currency name={selectedItem.sell_currency} sell_price={selectedItem.sell_price} />
+                    <Currency name={selectedItem?.sell_currency} sell_price={selectedItem?.sell_price} />
                 }
             >
-            <Link href="/items/[id]/edit" as={`/items/${selectedItem._id}/edit`} passHref>
+            <Link href="/items/[id]/edit" as={`/items/${selectedItem?._id}/edit`} passHref>
                 <Button type="edit">Edit</Button>
             </Link>
-            <Link href="/items/[id]" as={`/items/${selectedItem._id}`} passHref>
+            <Link href="/items/[id]" as={`/items/${selectedItem?._id}`} passHref>
                 <Button className="ml-2" type="view">View</Button>
             </Link>
             </TileViewer>

@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { mutate } from 'swr'
+import Input from './Input'
+import Select from './Select'
+import Button from '../Button'
 
 const AnimalForm = ({ formId, objectForm, forNewObject = true }) => {
   const router = useRouter()
@@ -10,9 +13,9 @@ const AnimalForm = ({ formId, objectForm, forNewObject = true }) => {
 
   const [form, setForm] = useState({
     name: objectForm.name,
-    size: objectForm.size.options[0],
-    leaving: objectForm.leaving.options[0],
-    rare_leaving: objectForm.rare_leaving.options[0],
+    size: objectForm.size.value,
+    leaving: objectForm.leaving.value,
+    rare_leaving: objectForm.rare_leaving.value,
     time: objectForm.time.value,
     weather: objectForm.weather.value,
     location_x: objectForm.location_x,
@@ -107,95 +110,101 @@ const AnimalForm = ({ formId, objectForm, forNewObject = true }) => {
   }
 
   return (
-    <>
-      <form id={formId} onSubmit={handleSubmit}>
-        <label htmlFor="name">Animal Name</label>
-        <input
-          type="text"
+    <div className="max-w-screen-md mx-auto ">
+      <form id={formId} onSubmit={handleSubmit} className="mt-6">
+        <Input 
+          type="text" 
+          id="name" 
+          name="name" 
+          defaultValue={form.name} 
+          onChange={handleChange}
+          required
           maxLength="60"
-          name="name"
-          value={form.name}
+          label="Animal Name" />
+
+        <Select
+          id="size"
+          name="size"
+          label="Size"
           onChange={handleChange}
-          required
-        />
-
-        <label htmlFor="size">Size</label>
-        <select name="size" onChange={handleChange} defaultValue={objectForm.size.value}>
-            {
-              objectForm.size.options.map((value, index) => {
-                return <option key={index} value={value}>{value}</option>
-              })
-            }
-        </select>
-
-        <label htmlFor="leaving">Primary Leaving</label>
-        <select name="leaving" onChange={handleChange} defaultValue={objectForm.leaving.value}>
-            {
-              objectForm.leaving.options.map((value, index) => {
-                return <option key={index} value={value}>{value}</option>
-              })
-            }
-        </select>
-
-        <label htmlFor="rare_leaving">Rare Leaving</label>
-        <select name="rare_leaving" onChange={handleChange} defaultValue={objectForm.rare_leaving.value}>
-            {
-              objectForm.rare_leaving.options.map((value, index) => {
-                return <option key={index} value={value}>{value}</option>
-              })
-            }
-        </select>
-
-        <label htmlFor="time">Spawn Time</label>
-        <select name="time" onChange={handleChange} defaultValue={objectForm.time.value}>
-          <option value="">None</option>
-            {
-              objectForm.time.options.map((value, index) => {
-                return <option key={index} value={value}>{value}</option>
-              })
-            }
-        </select>
-        
-
-        <label htmlFor="weather">Weather Condition</label>
-        <select name="weather" onChange={handleChange} defaultValue={objectForm.weather.value}>
-          <option value="">None</option>
-            {
-              objectForm.weather.options.map((value, index) => {
-                return <option key={index} value={value}>{value}</option>
-              })
-            }
-        </select>
-        
-        <label htmlFor="location_x">X Coordinate</label>
-        <input
-          type="number"
-          name="location_x"
-          value={form.location_x}
-          onChange={handleChange}
-          required
+          defaultValue={objectForm.size.value}
+          elements={objectForm.size.options}
         />
         
-        <label htmlFor="location_y">Y Coordinate</label>
-        <input
-          type="number"
-          name="location_y"
-          value={form.location_y}
-          onChange={handleChange}
-          required
-        />
-        
-        <label htmlFor="image_url">Image URL</label>
-        <input
-          type="url"
-          name="image_url"
-          value={form.image_url}
-          onChange={handleChange}
-        />
+        <div className="flex">
+          <Select
+            id="leaving"
+            name="leaving"
+            label="Primary Leaving"
+            onChange={handleChange}
+            defaultValue={objectForm.leaving.value}
+            elements={objectForm.leaving.options}
+            className="flex-1 mr-6"
+          />
+          
+          <Select
+            id="rare_leaving"
+            name="rare_leaving"
+            label="Rare Leaving"
+            onChange={handleChange}
+            defaultValue={objectForm.rare_leaving.value}
+            elements={objectForm.rare_leaving.options}
+            className="flex-1"
+          />
+        </div>
 
-        <button type="submit" className="btn">
-          Submit
-        </button>
+        
+        <div className="flex">
+          <Select
+            id="time"
+            name="time"
+            label="Spawn Time"
+            onChange={handleChange}
+            defaultValue={objectForm.time.value}
+            elements={[ "", ...objectForm.time.options ]}
+            className="flex-1 mr-6"
+          />
+          
+          <Select
+            id="weather"
+            name="weather"
+            label="Weather Condition"
+            onChange={handleChange}
+            defaultValue={objectForm.weather.value}
+            elements={[ "", ...objectForm.weather.options ]}
+            className="flex-1"
+          />
+        </div>
+
+        <div className="flex max-w-sm">
+          <Input 
+            type="number" 
+            id="location_x" 
+            name="location_x" 
+            defaultValue={form.location_x} 
+            onChange={handleChange}
+            required
+            label="X Coordinate"
+            className="mr-6" />
+          <Input 
+            type="number" 
+            id="location_y" 
+            name="location_y" 
+            defaultValue={form.location_y} 
+            onChange={handleChange}
+            required
+            label="Y Coordinate" />
+        </div>
+        <Input 
+            type="url" 
+            id="image_url" 
+            name="image_url" 
+            defaultValue={form.image_url} 
+            onChange={handleChange}
+            required
+            label="Image URL" />
+
+        <Button type="submit">Submit</Button>
       </form>
       <p>{message}</p>
       <div>
@@ -203,7 +212,7 @@ const AnimalForm = ({ formId, objectForm, forNewObject = true }) => {
           <li key={index}>{err}</li>
         ))}
       </div>
-    </>
+    </div>
   )
 }
 

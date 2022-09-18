@@ -29,9 +29,7 @@ const AnimalPage = ({ animal }) => {
           <Link href="/animals/[id]/edit" as={`/animals/${animal._id}/edit`} passHref>
             <Button type="edit">Edit</Button>
           </Link>
-          <button className="btn delete" onClick={handleDelete} passHref>
-            <Button className="ml-3" type="delete">Delete</Button>
-          </button>
+          <Button className="ml-3" type="delete" onClick={handleDelete}>Delete</Button>
       </AnimalCard>
       {message && <p>{message}</p>}
     </div>
