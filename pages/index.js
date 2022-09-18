@@ -43,9 +43,6 @@ const Index = ({ animals, items, products, workshop_data }) => {
           </div>
         )
       })}
-      <div key={1}>
-        <AddCard href="/animals/new"/>
-      </div>
     </div>
     <h1 className="mt-6 mb-4 text-4xl">Items</h1>
     {selectedItem && 
