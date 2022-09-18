@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const NavBar = () => {
@@ -7,12 +8,13 @@ const NavBar = () => {
     
     <Link className="flex items-center" href="/" passHref>
         <>
-            <img
+            <Image
             id="title"
+            width="32" height="32"
             className="block w-16 h-6 h-16 mr-3 border-0 rounded-full border-slate-700 sm:h-9"
             src="https://media.discordapp.net/attachments/640978235382956064/1018682382498418728/unknown.png?width=321&height=173"
             alt="mammet logo"
-            ></img>
+            />
             <span className="self-center text-xl font-semibold whitespace-nowrap ">Mammet</span>
         </>
     </Link>
